@@ -6,10 +6,17 @@ from .models import Habit
 @admin.register(Habit)
 class HabitAdmin(admin.ModelAdmin):
     list_display = (
-        'id', 'user', 'action', 'time', 'place',
-        'periodicity', 'duration', 'is_pleasant', 'is_public',
+        "id",
+        "user",
+        "action",
+        "time",
+        "place",
+        "periodicity",
+        "duration",
+        "is_pleasant",
+        "is_public",
     )
-    list_filter = ('is_pleasant', 'is_public', 'periodicity')
-    search_fields = ('action', 'place', 'user__username', 'user__email')
-    autocomplete_fields = ('related_habit',)
-    ordering = ('id',)
+    list_filter = ("is_pleasant", "is_public", "periodicity")
+    search_fields = ("action", "place", "user__username", "user__email")
+    autocomplete_fields = ("related_habit",)
+    ordering = ("id",)

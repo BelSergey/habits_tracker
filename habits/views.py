@@ -11,6 +11,7 @@ from .serializers import HabitSerializer, PublicHabitSerializer
 
 User = get_user_model()
 
+
 class HabitListCreateView(generics.ListCreateAPIView):
     serializer_class = HabitSerializer
     permission_classes = (permissions.IsAuthenticated,)
@@ -37,12 +38,13 @@ class PublicHabitListView(generics.ListAPIView):
     permission_classes = (permissions.IsAuthenticated,)
     pagination_class = HabitPagination
 
-@api_view(['POST'])
+
+@api_view(["POST"])
 @permission_classes([permissions.AllowAny])
 def telegram_webhook(request):
-    message = request.data.get('message', {})
-    chat = message.get('chat', {})
-    chat_id, username = chat.get('id'), chat.get('username')
+    message = request.data.get("message", {})
+    chat = message.get("chat", {})
+    chat_id, username = chat.get("id"), chat.get("username")
     if chat_id and username:
         User.objects.filter(username=username).update(telegram_chat_id=str(chat_id))
-    return Response({'ok': True})
+    return Response({"ok": True})
