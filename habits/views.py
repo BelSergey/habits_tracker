@@ -3,6 +3,7 @@ from rest_framework.decorators import api_view, permission_classes
 from rest_framework.response import Response
 
 from django.contrib.auth import get_user_model
+from drf_spectacular.utils import extend_schema, OpenApiExample
 
 from .models import Habit
 from .paginators import HabitPagination
@@ -39,6 +40,20 @@ class PublicHabitListView(generics.ListAPIView):
     pagination_class = HabitPagination
 
 
+@extend_schema(
+    summary='Webhook Telegram-бота',
+    description=(
+        'Принимает update от Telegram Bot API. Если пользователь отправил '
+        'боту команду /start и его username совпадает с зарегистрированным '
+        'в системе, сохраняет telegram_chat_id для рассылки напоминаний.'
+    ),
+    request={
+        'application/json': {
+            'example': {'message': {'chat': {'id': 123456789, 'username': 'oleg'}}}
+        }
+    },
+    responses={200: OpenApiExample('OK', value={'ok': True})},
+)
 @api_view(["POST"])
 @permission_classes([permissions.AllowAny])
 def telegram_webhook(request):
