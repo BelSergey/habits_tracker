@@ -1,11 +1,14 @@
-
 import os
+from dotenv import load_dotenv
 from datetime import timedelta
 from pathlib import Path
-from dotenv import load_dotenv
 from celery.schedules import crontab
 
+
+
+# Инициализация environ
 load_dotenv()
+
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -14,7 +17,8 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/5.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = os.getenv('secret_key')
+SECRET_KEY = os.getenv('SECRET_KEY')
+print(SECRET_KEY)
 
 
 # SECURITY WARNING: don't run with debug turned on in production!
@@ -38,7 +42,6 @@ INSTALLED_APPS = [
 
     'corsheaders',
 
-    'django_filters',
     'drf_spectacular',
 
     'django_celery_beat',
@@ -194,8 +197,8 @@ CELERY_BEAT_SCHEDULE = {
     },
 }
 
-CORS_ALLOWED_ORIGINS = env.list('CORS_ALLOWED_ORIGINS', default=[])
+CORS_ALLOWED_ORIGINS = os.getenv('CORS_ALLOWED_ORIGINS', '').split(',') if os.getenv('CORS_ALLOWED_ORIGINS') else []
 CORS_ALLOW_CREDENTIALS = True
 
-TELEGRAM_BOT_TOKEN = env('TELEGRAM_BOT_TOKEN', default='')
-TELEGRAM_API_URL = env('TELEGRAM_API_URL', default='https://api.telegram.org/bot')
+TELEGRAM_BOT_TOKEN = os.getenv('TELEGRAM_BOT_TOKEN', default='')
+TELEGRAM_API_URL = os.getenv('TELEGRAM_API_URL', default='https://api.telegram.org/bot')
