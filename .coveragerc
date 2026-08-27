@@ -1,0 +1,10 @@
+[run]
+source = habits,users
+omit =
+    */migrations/*
+    */tests/*
+    manage.py
+
+[report]
+show_missing = True
+skip_empty = True
