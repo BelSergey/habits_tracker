@@ -9,6 +9,7 @@ from .paginators import HabitPagination
 from .permissions import IsOwner
 from .serializers import HabitSerializer, PublicHabitSerializer
 
+User = get_user_model()
 
 class HabitListCreateView(generics.ListCreateAPIView):
     serializer_class = HabitSerializer
